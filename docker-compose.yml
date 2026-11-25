@@ -1,0 +1,19 @@
+services:
+  tunetrail:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: tunetrail-app
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - SECRET_KEY=${SECRET_KEY:-tunetrail-docker-secret-change-me}
+      - DATABASE_PATH=/app/database/tunetrail.db
+      - HYBRID_ALPHA=0.6
+    volumes:
+      - tunetrail_db:/app/database
+    restart: unless-stopped
+
+volumes:
+  tunetrail_db:
